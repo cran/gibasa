@@ -1,7 +1,7 @@
 Type: Package
 Package: gibasa
 Title: An Alternative 'Rcpp' Wrapper of 'MeCab'
-Version: 0.9.2
+Version: 0.9.3
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Shogo", "Ichinose", role = "aut"),
@@ -30,11 +30,11 @@ Encoding: UTF-8
 RoxygenNote: 7.2.3
 SystemRequirements: GNU make, MeCab
 NeedsCompilation: yes
-Packaged: 2023-04-11 12:39:55 UTC; user
+Packaged: 2023-04-20 05:20:43 UTC; paithiov909
 Author: Akiru Kato [aut, cre],
   Shogo Ichinose [aut],
   Taku Kudo [aut],
   Jorge Nocedal [ctb],
   Nippon Telegraph and Telephone Corporation [cph]
 Repository: CRAN
-Date/Publication: 2023-04-12 12:00:02 UTC
+Date/Publication: 2023-04-20 07:00:08 UTC
