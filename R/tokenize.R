@@ -1,8 +1,10 @@
 #' Tokenize sentences using 'MeCab'
 #'
 #' @param x A data.frame like object or a character vector to be tokenized.
-#' @param text_field String or symbol; column name where to get texts to be tokenized.
-#' @param docid_field String or symbol; column name where to get identifiers of texts.
+#' @param text_field <[`data-masked`][rlang::args_data_masking]>
+#' String or symbol; column name where to get texts to be tokenized.
+#' @param docid_field <[`data-masked`][rlang::args_data_masking]>
+#' String or symbol; column name where to get identifiers of texts.
 #' @param sys_dic Character scalar; path to the system dictionary for mecab.
 #' Note that the system dictionary is expected to be compiled with UTF-8,
 #' not Shift-JIS or other encodings.
@@ -65,7 +67,7 @@ tokenize.default <- function(x,
   )
 
   # if it's a factor, preserve ordering
-  col_names <- rlang::as_name(docid_field)
+  col_names <- as_name(docid_field)
   if (is.factor(x[[col_names]])) {
     col_u <- levels(x[[col_names]])
   } else {
@@ -103,6 +105,7 @@ tokenize.character <- function(x,
   if (is.null(nm)) {
     nm <- seq_along(x)
   }
+
   tbl <- tagger_impl(x, nm, sys_dic, user_dic, split, partial, grain_size)
 
   if (!identical(mode, "wakati")) {
@@ -120,10 +123,8 @@ tagger_impl <- function(sentences,
                         partial,
                         grain_size) {
   # check if dictionaries are available.
-  sys_dic <- paste0(sys_dic, collapse = "")
-  user_dic <- paste0(user_dic, collapse = "")
   if (rlang::is_empty(dictionary_info(sys_dic, user_dic))) {
-    rlang::abort(class = "gbs_missing_dict")
+    rlang::abort("Can't find dictionaries.", class = "gbs_missing_dict")
   }
 
   grain_size <- ifelse(grain_size > 0L, as.integer(grain_size), 1L)
