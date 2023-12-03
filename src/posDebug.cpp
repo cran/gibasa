@@ -1,6 +1,7 @@
 #define R_NO_REMAP
 
 #include <Rcpp.h>
+
 #include "mecab.h"
 
 using namespace Rcpp;
@@ -9,15 +10,15 @@ using namespace Rcpp;
 //'
 //' @param sys_dic String scalar.
 //' @param user_dic String scalar.
-//' @return data.frame.
+//' @returns data.frame.
 //'
 //' @name dictionary_info
 //' @export
 //
 // [[Rcpp::interfaces(r, cpp)]]
 // [[Rcpp::export]]
-Rcpp::DataFrame dictionary_info(std::string sys_dic = "",
-                                std::string user_dic = "") {
+Rcpp::DataFrame dictionary_info(const std::string& sys_dic = "",
+                                const std::string& user_dic = "") {
   std::vector<std::string> args;
   args.push_back("mecab");
   if (sys_dic != "") {
@@ -30,13 +31,14 @@ Rcpp::DataFrame dictionary_info(std::string sys_dic = "",
   }
   const char* delim = " ";
   std::ostringstream os;
-  std::copy(args.begin(), args.end(), std::ostream_iterator<std::string>(os, delim));
+  std::copy(args.begin(), args.end(),
+            std::ostream_iterator<std::string>(os, delim));
   std::string argv = os.str();
 
-  mecab_model_t* model = mecab_model_new2(argv.c_str());
+  MeCab::Model* model = MeCab::createModel(argv.c_str());
   if (!model) {
-    mecab_model_destroy(model);
-    Rcpp::warning("Failed to create mecab_model_t: maybe provided an invalid dictionary?");
+    Rcpp::warning(
+        "Failed to create MeCab::Model: maybe provided an invalid dictionary?");
     return R_NilValue;
   }
 
@@ -51,7 +53,7 @@ Rcpp::DataFrame dictionary_info(std::string sys_dic = "",
   std::string charset;
   std::string filename;
 
-  const mecab_dictionary_info_t* d = mecab_model_dictionary_info(model);
+  const MeCab::DictionaryInfo* d = model->dictionary_info();
   for (; d; d = d->next) {
     charset = std::string(d->charset);
     filename = std::string(d->filename);
@@ -65,17 +67,12 @@ Rcpp::DataFrame dictionary_info(std::string sys_dic = "",
     version.push_back(d->version);
   }
 
-  mecab_model_destroy(model);
+  MeCab::deleteModel(model);
 
-  return DataFrame::create(
-    _["file_path"] = filenames,
-    _["charset"] = charsets,
-    _["lsize"] = lsize,
-    _["rsize"] = rsize,
-    _["size"] = size,
-    _["type"] = type,
-    _["version"] = version
-  );
+  return Rcpp::DataFrame::create(_["file_path"] = filenames,
+                                 _["charset"] = charsets, _["lsize"] = lsize,
+                                 _["rsize"] = rsize, _["size"] = size,
+                                 _["type"] = type, _["version"] = version);
 }
 
 //' Get transition cost between pos attributes
@@ -84,17 +81,15 @@ Rcpp::DataFrame dictionary_info(std::string sys_dic = "",
 //' @param lcAttr Integer.
 //' @param sys_dic String.
 //' @param user_dic String.
-//' @return Numeric.
+//' @returns Numeric.
 //'
 //' @name transition_cost
 //' @keywords internal
 //
 // [[Rcpp::interfaces(r, cpp)]]
 // [[Rcpp::export]]
-int transition_cost(unsigned short rcAttr,
-                    unsigned short lcAttr,
-                    std::string sys_dic = "",
-                    std::string user_dic = "") {
+int transition_cost(unsigned short rcAttr, unsigned short lcAttr,
+                    const std::string& sys_dic = "", const std::string& user_dic = "") {
   std::vector<std::string> args;
   args.push_back("mecab");
   if (sys_dic != "") {
@@ -107,18 +102,19 @@ int transition_cost(unsigned short rcAttr,
   }
   const char* delim = " ";
   std::ostringstream os;
-  std::copy(args.begin(), args.end(), std::ostream_iterator<std::string>(os, delim));
+  std::copy(args.begin(), args.end(),
+            std::ostream_iterator<std::string>(os, delim));
   std::string argv = os.str();
 
-  mecab_model_t* model = mecab_model_new2(argv.c_str());
+  MeCab::Model* model = MeCab::createModel(argv.c_str());
   if (!model) {
-    mecab_model_destroy(model);
-    Rcpp::stop("Failed to create mecab_model_t: maybe provided an invalid dictionary?");
+    Rcpp::stop(
+        "Failed to create MeCab::Model: maybe provided an invalid dictionary?");
   }
 
-  const int t_cost = mecab_model_transition_cost(model, rcAttr, lcAttr);
+  const int t_cost = model->transition_cost(rcAttr, lcAttr);
 
-  mecab_model_destroy(model);
+  MeCab::deleteModel(model);
   return t_cost;
 }
 
@@ -132,7 +128,7 @@ int transition_cost(unsigned short rcAttr,
 //' @param sys_dic String.
 //' @param user_dic String.
 //' @param partial Logical.
-//' @return data.frame.
+//' @returns data.frame.
 //'
 //' @name posDebugRcpp
 //' @keywords internal
@@ -140,9 +136,9 @@ int transition_cost(unsigned short rcAttr,
 //
 // [[Rcpp::interfaces(r, cpp)]]
 // [[Rcpp::export]]
-Rcpp::DataFrame posDebugRcpp(std::vector<std::string> text,
-                             std::string sys_dic = "",
-                             std::string user_dic = "",
+Rcpp::DataFrame posDebugRcpp(const std::vector<std::string>& text,
+                             const std::string& sys_dic = "",
+                             const std::string& user_dic = "",
                              Rcpp::LogicalVector partial = 0) {
   std::vector<std::string> args;
   args.push_back("mecab");
@@ -156,13 +152,14 @@ Rcpp::DataFrame posDebugRcpp(std::vector<std::string> text,
   }
   const char* delim = " ";
   std::ostringstream os;
-  std::copy(args.begin(), args.end(), std::ostream_iterator<std::string>(os, delim));
+  std::copy(args.begin(), args.end(),
+            std::ostream_iterator<std::string>(os, delim));
   std::string argv = os.str();
 
-  mecab_model_t* model = mecab_model_new2(argv.c_str());
+  MeCab::Model* model = MeCab::createModel(argv.c_str());
   if (!model) {
-    mecab_model_destroy(model);
-    Rcpp::stop("Failed to create mecab_model_t: maybe provided an invalid dictionary?");
+    Rcpp::stop(
+        "Failed to create MeCab::Model: maybe provided an invalid dictionary?");
   }
 
   std::vector<int> docids;
@@ -170,8 +167,8 @@ Rcpp::DataFrame posDebugRcpp(std::vector<std::string> text,
   std::vector<std::string> surfaces;
   std::vector<std::string> features;
   std::vector<unsigned char> stats;
-  std::vector<unsigned short> rcAttr;
   std::vector<unsigned short> lcAttr;
+  std::vector<unsigned short> rcAttr;
   std::vector<float> alpha;
   std::vector<float> beta;
   std::vector<unsigned char> isbest;
@@ -179,26 +176,29 @@ Rcpp::DataFrame posDebugRcpp(std::vector<std::string> text,
   std::vector<short> wcost;
   std::vector<long> cost;
 
-  mecab_t* tagger = mecab_model_new_tagger(model);
-  mecab_lattice_t* lattice = mecab_model_new_lattice(model);
-  const mecab_node_t* node;
+  MeCab::Tagger* tagger = model->createTagger();
+  MeCab::Lattice* lattice = model->createLattice();
+  const MeCab::Node* node;
 
   if (is_true(all(partial))) {
-    mecab_lattice_add_request_type(lattice, MECAB_PARTIAL);
+    lattice->add_request_type(MECAB_PARTIAL);
   } else {
-    mecab_lattice_add_request_type(lattice, MECAB_ALL_MORPHS);
+    lattice->add_request_type(MECAB_ALL_MORPHS);
   }
-  mecab_lattice_add_request_type(lattice, MECAB_MARGINAL_PROB);
+  lattice->add_request_type(MECAB_MARGINAL_PROB);
 
-  for (size_t i = 0; i < text.size(); ++i) {
+  for (std::size_t i = 0; i < text.size(); ++i) {
     if (i % 100 == 0) checkUserInterrupt();
 
     std::string input = text[i];
     if (is_true(all(partial))) input += "\nEOS";
 
-    mecab_lattice_set_sentence(lattice, input.c_str());
-    mecab_parse_lattice(tagger, lattice);
-    node = mecab_lattice_get_bos_node(lattice);
+    lattice->set_sentence(input.c_str());
+    if (!tagger->parse(lattice)) {
+      std::string err = MeCab::getLastError();
+      Rcpp::stop(err);
+    }
+    node = lattice->bos_node();
 
     std::string surface;
     std::string feature;
@@ -212,8 +212,8 @@ Rcpp::DataFrame posDebugRcpp(std::vector<std::string> text,
       surfaces.push_back(surface);
       features.push_back(feature);
       stats.push_back(node->stat);
-      rcAttr.push_back(node->rcAttr);
       lcAttr.push_back(node->lcAttr);
+      rcAttr.push_back(node->rcAttr);
       alpha.push_back(node->alpha);
       beta.push_back(node->beta);
       isbest.push_back(node->isbest);
@@ -223,22 +223,14 @@ Rcpp::DataFrame posDebugRcpp(std::vector<std::string> text,
     }
   }
 
-  mecab_model_destroy(model);
+  MeCab::deleteLattice(lattice);
+  MeCab::deleteTagger(tagger);
+  MeCab::deleteModel(model);
 
-  return DataFrame::create(
-    _["doc_id"] = docids,
-    _["pos_id"] = posids,
-    _["surface"] = surfaces,
-    _["feature"] = features,
-    _["stat"] = stats,
-    _["rcAttr"] = rcAttr,
-    _["lcAttr"] = lcAttr,
-    _["alpha"] = alpha,
-    _["beta"] = beta,
-    _["is_best"] = isbest,
-    _["prob"] = prob,
-    _["wcost"] = wcost,
-    _["cost"] = cost
-  );
+  return Rcpp::DataFrame::create(
+      _["doc_id"] = docids, _["pos_id"] = posids, _["surface"] = surfaces,
+      _["feature"] = features, _["stat"] = stats, _["lcAttr"] = lcAttr,
+      _["rcAttr"] = rcAttr, _["alpha"] = alpha, _["beta"] = beta,
+      _["is_best"] = isbest, _["prob"] = prob, _["wcost"] = wcost,
+      _["cost"] = cost);
 }
-

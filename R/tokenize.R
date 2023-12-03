@@ -5,12 +5,12 @@
 #' String or symbol; column name where to get texts to be tokenized.
 #' @param docid_field <[`data-masked`][rlang::args_data_masking]>
 #' String or symbol; column name where to get identifiers of texts.
-#' @param sys_dic Character scalar; path to the system dictionary for mecab.
+#' @param sys_dic Character scalar; path to the system dictionary for 'MeCab'.
 #' Note that the system dictionary is expected to be compiled with UTF-8,
 #' not Shift-JIS or other encodings.
-#' @param user_dic Character scalar; path to the user dictionary for mecab.
+#' @param user_dic Character scalar; path to the user dictionary for 'MeCab'.
 #' @param split Logical. When passed as `TRUE`, the function internally splits the sentences
-#' into sub-sentences using \code{stringi::stri_split_boudaries(type = "sentence")}.
+#' into sub-sentences using \code{stringi::stri_split_boundaries(type = "sentence")}.
 #' @param partial Logical. When passed as `TRUE`, activates partial parsing mode.
 #' To activate this feature, remember that all spaces at the start and end of
 #' the input chunks are already squashed. In particular, trailing spaces
@@ -19,14 +19,14 @@
 #' This argument is internally passed to `RcppParallel::parallelFor` function.
 #' Setting a larger chunk size could improve the performance in some cases.
 #' @param mode Character scalar to switch output format.
-#' @return A tibble or a named list of tokens.
+#' @returns A tibble or a named list of tokens.
 #' @export
 #' @examples
 #' \dontrun{
 #' df <- tokenize(
 #'   data.frame(
-#'     doc_id = seq_along(audubon::polano[5:8]),
-#'     text = audubon::polano[5:8]
+#'     doc_id = seq_along(ginga[5:8]),
+#'     text = ginga[5:8]
 #'   )
 #' )
 #' head(df)

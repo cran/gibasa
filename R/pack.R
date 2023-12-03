@@ -24,10 +24,10 @@
 #' @param pull <[`data-masked`][rlang::args_data_masking]>
 #' Column to be packed into text or ngrams body. Default value is `token`.
 #' @param n Integer internally passed to ngrams tokenizer function
-#' created of \code{audubon::ngram_tokenizer()}
+#' created of \code{gibasa::ngram_tokenizer()}
 #' @param sep Character scalar internally used as the concatenator of ngrams.
 #' @param .collapse This argument is passed to \code{stringi::stri_c()}.
-#' @return A tibble.
+#' @returns A tibble.
 #' @export
 #' @examples
 #' \dontrun{
@@ -69,7 +69,7 @@ pack <- function(tbl, pull = "token", n = 1L, sep = "-", .collapse = " ") {
 #' Make an ngram tokenizer function.
 #'
 #' @param n Integer.
-#' @return ngram tokenizer function
+#' @returns ngram tokenizer function
 #' @export
 #' @examples
 #' bigram <- ngram_tokenizer(2)

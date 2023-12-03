@@ -1,7 +1,7 @@
 Type: Package
 Package: gibasa
 Title: An Alternative 'Rcpp' Wrapper of 'MeCab'
-Version: 0.9.5
+Version: 1.0.1
 Authors@R: c(
     person("Akiru", "Kato", , "paithiov909@gmail.com", role = c("aut", "cre")),
     person("Shogo", "Ichinose", role = "aut"),
@@ -20,7 +20,7 @@ BugReports: https://github.com/paithiov909/gibasa/issues
 Depends: R (>= 2.10)
 Imports: dplyr, Matrix, purrr, Rcpp, RcppParallel, readr, rlang (>=
         0.4.11), stringi, utils
-Suggests: roxygen2, testthat (>= 3.0.0)
+Suggests: roxygen2, testthat (>= 3.0.0), withr
 LinkingTo: Rcpp, RcppParallel
 Config/Needs/website: ggdendro, ggpubr, quanteda, quanteda.textmodels,
         quanteda.textplots, quanteda.textstats, reactable, stringr,
@@ -32,11 +32,11 @@ LazyData: true
 RoxygenNote: 7.2.3
 SystemRequirements: GNU make, MeCab
 NeedsCompilation: yes
-Packaged: 2023-07-09 06:48:36 UTC; paithiov909
+Packaged: 2023-12-03 00:23:57 UTC; paithiov909
 Author: Akiru Kato [aut, cre],
   Shogo Ichinose [aut],
   Taku Kudo [aut],
   Jorge Nocedal [ctb],
   Nippon Telegraph and Telephone Corporation [cph]
 Repository: CRAN
-Date/Publication: 2023-07-09 09:00:07 UTC
+Date/Publication: 2023-12-03 00:40:02 UTC

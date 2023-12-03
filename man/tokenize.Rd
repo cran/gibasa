@@ -25,14 +25,14 @@ String or symbol; column name where to get texts to be tokenized.}
 \item{docid_field}{<\code{\link[rlang:args_data_masking]{data-masked}}>
 String or symbol; column name where to get identifiers of texts.}
 
-\item{sys_dic}{Character scalar; path to the system dictionary for mecab.
+\item{sys_dic}{Character scalar; path to the system dictionary for 'MeCab'.
 Note that the system dictionary is expected to be compiled with UTF-8,
 not Shift-JIS or other encodings.}
 
-\item{user_dic}{Character scalar; path to the user dictionary for mecab.}
+\item{user_dic}{Character scalar; path to the user dictionary for 'MeCab'.}
 
 \item{split}{Logical. When passed as \code{TRUE}, the function internally splits the sentences
-into sub-sentences using \code{stringi::stri_split_boudaries(type = "sentence")}.}
+into sub-sentences using \code{stringi::stri_split_boundaries(type = "sentence")}.}
 
 \item{partial}{Logical. When passed as \code{TRUE}, activates partial parsing mode.
 To activate this feature, remember that all spaces at the start and end of
@@ -55,8 +55,8 @@ Tokenize sentences using 'MeCab'
 \dontrun{
 df <- tokenize(
   data.frame(
-    doc_id = seq_along(audubon::polano[5:8]),
-    text = audubon::polano[5:8]
+    doc_id = seq_along(ginga[5:8]),
+    text = ginga[5:8]
   )
 )
 head(df)

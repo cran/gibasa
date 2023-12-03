@@ -16,14 +16,14 @@ gbs_tokenize(
 \arguments{
 \item{x}{A data.frame like object or a character vector to be tokenized.}
 
-\item{sys_dic}{Character scalar; path to the system dictionary for mecab.
+\item{sys_dic}{Character scalar; path to the system dictionary for 'MeCab'.
 Note that the system dictionary is expected to be compiled with UTF-8,
 not Shift-JIS or other encodings.}
 
-\item{user_dic}{Character scalar; path to the user dictionary for mecab.}
+\item{user_dic}{Character scalar; path to the user dictionary for 'MeCab'.}
 
 \item{split}{Logical. When passed as \code{TRUE}, the function internally splits the sentences
-into sub-sentences using \code{stringi::stri_split_boudaries(type = "sentence")}.}
+into sub-sentences using \code{stringi::stri_split_boundaries(type = "sentence")}.}
 
 \item{partial}{Logical. When passed as \code{TRUE}, activates partial parsing mode.
 To activate this feature, remember that all spaces at the start and end of
