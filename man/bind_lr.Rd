@@ -13,7 +13,8 @@ bind_lr(tbl, term = "token", lr_mode = c("n", "dn"), avg_rate = 1)
 Column containing terms.}
 
 \item{lr_mode}{Method for computing 'FL' and 'FR' values.
-\code{n} is equivalent to 'LN' and 'RN', and \code{dn} is equivalent to 'LDN' and 'RDN'.}
+\code{n} is equivalent to 'LN' and 'RN',
+and \code{dn} is equivalent to 'LDN' and 'RDN'.}
 
 \item{avg_rate}{Weight of the 'LR' value.}
 }
@@ -31,11 +32,12 @@ that based on the words and their positions (left or right side).
 \dontrun{
 df <- tokenize(
   data.frame(
-    doc_id = seq_along(ginga[5:8]),
+    doc_id = seq_along(5:8),
     text = ginga[5:8]
   )
 )
-bind_lr(df)
+bind_lr(df) |>
+  head()
 }
 }
 \seealso{

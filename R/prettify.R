@@ -24,7 +24,7 @@
 #' \dontrun{
 #' df <- tokenize(
 #'   data.frame(
-#'     doc_id = seq_along(ginga[5:8]),
+#'     doc_id = seq_along(5:8),
 #'     text = ginga[5:8]
 #'   )
 #' )
@@ -55,7 +55,6 @@ prettify <- function(tbl,
         stringi::stri_c(into, collapse = ","),
         dplyr::pull(tbl, {{ col }})
       ) %>%
-      stringi::stri_c(collapse = "\n") %>%
       I() %>%
       readr::read_delim(
         delim = delim,
@@ -72,14 +71,20 @@ prettify <- function(tbl,
 #' Get dictionary features
 #'
 #' Returns names of dictionary features.
-#' Currently supports "unidic17" (2.1.2 src schema), "unidic26" (2.1.2 bin schema),
-#' "unidic29" (schema used in 2.2.0, 2.3.0), "cc-cedict", "ko-dic" (mecab-ko-dic),
-#' "naist11", "sudachi", and "ipa".
+#' Currently supports
+#' "unidic17" (2.1.2 src schema),
+#' "unidic26" (2.1.2 bin schema),
+#' "unidic29" (schema used in 2.2.0, 2.3.0),
+#' "cc-cedict",
+#' "ko-dic" (mecab-ko-dic),
+#' "naist11",
+#' "sudachi", and "ipa".
 #'
 #' @seealso See also
 #' \href{https://github.com/ueda-keisuke/CC-CEDICT-MeCab}{'CC-CEDICT-MeCab'}
 #' and \href{https://bitbucket.org/eunjeon/mecab-ko-dic/src/master/}{'mecab-ko-dic'}.
-#' @param dict Character scalar; one of "ipa", "unidic17", "unidic26", "unidic29",
+#' @param dict Character scalar;
+#' one of "ipa", "unidic17", "unidic26", "unidic29",
 #' "cc-cedict", "ko-dic", "naist11", or "sudachi".
 #' @returns A character vector.
 #' @export
@@ -126,7 +131,7 @@ get_dict_features <- function(dict = c(
       "POS1", "POS2", "POS3", "POS4", "X5StageUse1", "X5StageUse2", "Original", "Yomi1", "Yomi2", "Info", "Misc"
     )),
     dict == "sudachi" ~ list(c(
-      "POS1", "POS2", "POS3", "POS4", "cType", "cForm"
+      "POS1", "POS2", "POS3", "POS4", "cType", "cForm", "dictionary_form", "normalized_form", "reading_form"
     )),
     TRUE ~ list(c("POS1", "POS2", "POS3", "POS4", "X5StageUse1", "X5StageUse2", "Original", "Yomi1", "Yomi2"))
   )

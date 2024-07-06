@@ -14,7 +14,8 @@
 #' The data.frame of tokens here is a data.frame object
 #' compatible with the TIF.
 #'
-#' A TIF valid data.frame of tokens are expected to have one unique key column (named `doc_id`)
+#' A TIF valid data.frame of tokens is expected to have
+#' one unique key column (named `doc_id`)
 #' of each text and several feature columns of each tokens.
 #' The feature columns must contain at least `token` itself.
 #'
@@ -33,7 +34,7 @@
 #' \dontrun{
 #' df <- tokenize(
 #'   data.frame(
-#'     doc_id = seq_along(ginga[5:8]),
+#'     doc_id = seq_along(5:8),
 #'     text = ginga[5:8]
 #'   )
 #' )
@@ -45,7 +46,7 @@ pack <- function(tbl, pull = "token", n = 1L, sep = "-", .collapse = " ") {
     tbl %>%
       dplyr::reframe(
         text = .data[[pull]] %>%
-          stringi::stri_omit_empty_na() %>%
+          stringi::stri_remove_empty_na() %>%
           stringi::stri_c(collapse = .collapse),
         .by = "doc_id"
       ) %>%

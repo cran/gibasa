@@ -108,8 +108,8 @@ namespace MeCab {
 class die {
  public:
   die() {
-    Rcpp::Rcerr << std::endl;
-    Rcpp::stop("Error occurred while calling the MeCab API.");
+    Rcpp::Rcerr << "\n";
+    throw std::logic_error("An error occurred while calling the MeCab API.");
   }
   ~die() {
     // std::exit(EXIT_FAILURE);

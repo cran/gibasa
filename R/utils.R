@@ -5,7 +5,7 @@
 #' Column containing tokens.
 #' @param pos_field Column containing features
 #' that will be kept as the names of tokens.
-#' of tokens. If you don't need them, give a `NULL` for this argument.
+#' If you don't need them, give a `NULL` for this argument.
 #' @param nm Names of returned list.
 #' If left with `NULL`, "doc_id" field of `tbl` is used instead.
 #' @returns A named list of tokens.
@@ -14,7 +14,7 @@
 #' \dontrun{
 #' tokenize(
 #'   data.frame(
-#'     doc_id = seq_along(ginga[5:8]),
+#'     doc_id = seq_along(5:8),
 #'     text = ginga[5:8]
 #'   )
 #' ) |>
