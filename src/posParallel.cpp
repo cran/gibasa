@@ -1,5 +1,7 @@
 // [[Rcpp::depends(RcppParallel)]]
+#ifndef R_NO_REMAP
 #define R_NO_REMAP
+#endif
 
 #include <Rcpp.h>
 #include <RcppParallel.h>
@@ -78,12 +80,15 @@ struct TextParser : public RcppParallel::Worker {
 
 //' Call tagger inside 'RcppParallel::parallelFor' and return a data.frame.
 //'
-//' @param text Character vector.
-//' @param sys_dic String scalar.
-//' @param user_dic String scalar.
-//' @param partial Logical.
-//' @param grain_size Integer (larger than 1).
-//' @returns data.frame.
+//' This function is an internal function called by `tokenize()`.
+//' For common usage, use `tokenize()` instead.
+//'
+//' @param text A character vector to be tokenized.
+//' @param sys_dic Character scalar; path to the system dictionary for 'MeCab'.
+//' @param user_dic Character scalar; path to the user dictionary for 'MeCab'.
+//' @param partial Logical; If `TRUE`, activates partial parsing mode.
+//' @param grain_size Integer value larger than 1.
+//' @returns A data.frame.
 //'
 //' @name posParallelRcpp
 //' @keywords internal

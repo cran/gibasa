@@ -1,3 +1,8 @@
+# gibasa 1.1.2
+
+* Bumped minimum R version to 4.2.0.
+* Refactored `tagger_impl` to improve performance of `tokenize(split = TRUE)`.
+
 # gibasa 1.1.1
 
 * `tokenize` now warns rather than throws an error when an invalid input is given during partial parsing. With this change, `tokenize` is no longer entirely aborted even if an invalid string is given. Parsing of those strings is simply skipped.
